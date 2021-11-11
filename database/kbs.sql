@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 11, 2021 at 06:25 AM
+-- Generation Time: Nov 11, 2021 at 01:07 PM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.7
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `kbs`
 --
+CREATE DATABASE IF NOT EXISTS `kbs` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `kbs`;
 
 -- --------------------------------------------------------
 
@@ -33,6 +35,16 @@ CREATE TABLE `chapter` (
   `Name` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `chapter`
+--
+
+INSERT INTO `chapter` (`ID`, `ID_subject`, `Name`) VALUES
+('XSTK01', 'COMP1501', 'Sự kiện ngẫu nhiên và phép tính xác suất'),
+('XSTK02', 'COMP1501', 'Biến ngẫu nhiên và luật phân phối xác suất'),
+('XSTK03', 'COMP1501', 'Biến ngẫu nhiên nhiều chiều'),
+('XSTK04', 'COMP1501', 'Mẫu thống kê và ước lượng tham số');
+
 -- --------------------------------------------------------
 
 --
@@ -40,8 +52,8 @@ CREATE TABLE `chapter` (
 --
 
 CREATE TABLE `exercise` (
-  `ID` varchar(10) NOT NULL,
-  `ID_lesson` varchar(10) DEFAULT NULL,
+  `ID` int(10) NOT NULL,
+  `ID_lesson` int(10) DEFAULT NULL,
   `Name` text NOT NULL,
   `Content` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -53,10 +65,20 @@ CREATE TABLE `exercise` (
 --
 
 CREATE TABLE `lesson` (
-  `ID` varchar(10) NOT NULL,
+  `ID` int(10) NOT NULL,
   `ID_chapter` varchar(10) DEFAULT NULL,
   `Name` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `lesson`
+--
+
+INSERT INTO `lesson` (`ID`, `ID_chapter`, `Name`) VALUES
+(1, 'XSTK01', 'Khái niệm mở đầu'),
+(2, 'XSTK01', 'Các định nghĩa của xác suất'),
+(3, 'XSTK01', 'Xác suất có điều kiện'),
+(4, 'XSTK01', 'Công thức Bayes');
 
 -- --------------------------------------------------------
 
@@ -65,11 +87,18 @@ CREATE TABLE `lesson` (
 --
 
 CREATE TABLE `lesson_detail` (
-  `ID` varchar(10) NOT NULL,
-  `ID_lesson` varchar(10) DEFAULT NULL,
+  `ID` int(10) NOT NULL,
+  `ID_lesson` int(10) DEFAULT NULL,
   `Name` text DEFAULT NULL COMMENT 'Name of the concept, theorem, axiom,...',
   `Content` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `lesson_detail`
+--
+
+INSERT INTO `lesson_detail` (`ID`, `ID_lesson`, `Name`, `Content`) VALUES
+(1, 1, 'Sự kiện ngẫu nhiên', 'Sự kiện được hiểu như là một sự việc, một hiện tượng nào đó của cuộc sống tự nhiên và xã hội.\r\n\r\nKhi thực hiện một tập hợp điều kiện xác định, nói tắt là bộ điều kiện, gọi là một phép thử, có thể có nhiều kết cục khác nhau.');
 
 -- --------------------------------------------------------
 
@@ -87,10 +116,13 @@ CREATE TABLE `subject` (
 --
 
 INSERT INTO `subject` (`ID`, `Name`) VALUES
-('MATH_000', 'Probability and Statistics'),
-('MATH_001', 'Linear Algebra'),
-('MATH_002', 'Mathematical Analysis'),
-('MATH_003', 'Number Theory');
+('COMP1012', 'Lý thuyết đồ thị'),
+('COMP1319', 'Lý thuyết số và logic học'),
+('COMP1501', 'Xác suất thống kê và ứng dụng'),
+('COMP1502', 'Quy hoạch tuyến tính và ứng dụng'),
+('MATH1002', 'Giải tích 1'),
+('MATH1010', 'Toán rời rạc'),
+('MATH1108', 'Đại số tuyến tính');
 
 --
 -- Indexes for dumped tables
@@ -129,6 +161,28 @@ ALTER TABLE `lesson_detail`
 --
 ALTER TABLE `subject`
   ADD PRIMARY KEY (`ID`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `exercise`
+--
+ALTER TABLE `exercise`
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `lesson`
+--
+ALTER TABLE `lesson`
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `lesson_detail`
+--
+ALTER TABLE `lesson_detail`
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
