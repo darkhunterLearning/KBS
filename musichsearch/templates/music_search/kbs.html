@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block body_block %}
+<title>El Psy Kongroo</title>
+<h2 class="text-center mt-3 mb-3 border border-primary"><b>PS Searcher</b></h2>
+<div class="container my-4 post-wrapper">
+    <div class="jumbotron border shadow">
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <form>
+                    <div class="input-group">
+                        <form method="POST" action="{% url 'result_kbs' %}">
+                        {{form.as_p}} 
+                        {% csrf_token %}
+                        <input type="text" name="sample" placeholder="Nhập kiến thức cần tra cứu" class="form-control form-control-lg" />
+                        <div class="input-group-append">
+                            <input class="btn btn-dark btn-lg" type="submit" value="Search"/>
+                        </div>
+                        </form>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="containter">
+    <div class="row">
+        <div class="col text-center">
+            <a class="btn btn-primary" href="{% url 'home' %}">Back to Home Page</a>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock  %}

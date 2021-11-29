@@ -1,0 +1,7 @@
+.ipynb_checkpoints
+__pycache__
+chromedriver_win32
+songs
+musichsearch/media
+musichsearch/Nazash_24_48_1000.pkl
+demo.py
