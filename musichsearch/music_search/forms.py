@@ -6,3 +6,5 @@ class AudioForm(forms.ModelForm):
         model = Audio_store
         fields = ['record']
 
+class HomeForm(forms.Form):
+    post = forms.CharField()

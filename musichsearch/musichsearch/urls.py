@@ -24,7 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('music/', views.Audio_store, name="music"),
     path('kbs/', views.kbs, name="KBS"),
-    path('result/', views.result_kbs, name="result_kbs"),
+    path('kbs/result/', views.result_kbs, name="result_kbs"),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

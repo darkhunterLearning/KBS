@@ -1,7 +1,7 @@
 from django.shortcuts import render
 # from .utils import load_object
-from .forms import AudioForm
-import librosa 
+from .forms import AudioForm, HomeForm
+import librosa
 from .utils import *
 import pickle
 from django.core.files.storage import default_storage
@@ -27,7 +27,7 @@ def Audio_store(request):
             my_nazash = load_object()
             # D:\Data-Mining\musichsearch\music_search\Nazash_24_48_1000.pkl
             test_sample, test_sr = librosa.load(data)
-            
+
             results = my_nazash.query(test_sample, test_sr)
             sorted_song_by_results = sorted(results, key=results.get, reverse=True)
             searched_song = []
@@ -37,9 +37,9 @@ def Audio_store(request):
                 idx += 1
                 if idx == 6:
                     break
-                
+
             link_song = "D:/audio1.wav"
-            
+
             form.save()
             return render(request, 'music_search/demo.html', context={'searched_song':searched_song, 'audio':audio, 'link_song':link_song})
         else:
@@ -58,9 +58,12 @@ def result_kbs(request):
 #     cursor.execute("select name from lesson")
 #     result = cursor.fetchall()
 #     return render(request, 'music_search/result.html', context={'result':result})
-    if request.method == "POST":
-        title = request.body
-        print(title)
-        return render(request,'music_search/result.html', {'data':title})
+    # if request.method == "POST":
+    #     title = request.body
+    #     print(title)
+    #     return render(request,'music_search/result.html', {'data':title})
     # else:
     #     return render(request,'music_search/kbs.html')
+
+    text = request.GET['demo']
+    return render(request,'music_search/result.html', {'data': text})

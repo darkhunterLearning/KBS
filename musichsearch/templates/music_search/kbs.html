@@ -8,13 +8,10 @@
             <div class="col-md-8 offset-2">
                 <form>
                     <div class="input-group">
-                        <form method="POST" action="{% url 'result_kbs' %}">
-                        {{form.as_p}} 
-                        {% csrf_token %}
-                        <input type="text" name="sample" placeholder="Nhập kiến thức cần tra cứu" class="form-control form-control-lg" />
-                        <div class="input-group-append">
-                            <input class="btn btn-dark btn-lg" type="submit" value="Search"/>
-                        </div>
+                        <form action={% url 'result_kbs' %} method="POST" >
+                        <!-- {% csrf_token %} -->
+                        <input type="text" name="demo" placeholder="Nhập kiến thức cần tra cứu" class="form-control form-control-lg" />
+                        <input value="Search" class="btn btn-dark btn-lg" type="submit"/>
                         </form>
                     </div>
                 </form>
