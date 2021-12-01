@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% block body_block %}
 <title>El Psy Kongroo</title>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
 <h2 class="text-center mt-3 mb-3 border border-primary"><b>PS Searcher</b></h2>
 <div class="container my-4 post-wrapper">
     <div class="jumbotron border shadow">
@@ -8,9 +12,10 @@
             <div class="col-md-8 offset-2">
                 <form>
                     <div class="input-group">
-                        <form action={% url 'result_kbs' %} method="POST" >
+                        <form  action='' method="GET">
                         <!-- {% csrf_token %} -->
-                        <input type="text" name="demo" placeholder="Nhập kiến thức cần tra cứu" class="form-control form-control-lg" />
+                        <!-- {{form.as_p}} -->
+                        <input type="text" name="q" class="form-control form-control-lg" />
                         <input value="Search" class="btn btn-dark btn-lg" type="submit"/>
                         </form>
                     </div>
@@ -20,6 +25,9 @@
     </div>
 </div>
 <br>
+{% if test %}
+<p>{{test}}</p>
+{% endif %}
 <div class="containter">
     <div class="row">
         <div class="col text-center">

@@ -46,24 +46,29 @@ def Audio_store(request):
             form = AudioForm()
     return render(request, 'music_search/music.html', {'form' : form})
 
-def kbs(request):
+def demo(request):
     return render(request, 'music_search/kbs.html')
 #     cursor = connection.cursor()
 #     cursor.execute("select name from lesson")
 #     result = cursor.fetchall()
 #     return render(request, 'music_search/result.html', context={'data':result})
 
-def result_kbs(request):
-#     cursor = connection.cursor()
-#     cursor.execute("select name from lesson")
-#     result = cursor.fetchall()
-#     return render(request, 'music_search/result.html', context={'result':result})
+def kbs(request):
+    # form = HomeForm()
     # if request.method == "POST":
-    #     title = request.body
-    #     print(title)
-    #     return render(request,'music_search/result.html', {'data':title})
+    #     form = HomeForm(request.POST)
+    #     if form.is_valid():
+    #         data = request.POST.get("demo")
+    #         # form.save()
+    #         print(data)
+    #         return render(request, 'music_search/result.html', context={'data': data})
     # else:
-    #     return render(request,'music_search/kbs.html')
-
-    text = request.GET['demo']
-    return render(request,'music_search/result.html', {'data': text})
+    #     form = HomeForm()
+    # print(request)
+    query_dict = request.GET
+    query = query_dict.get("q")
+    cursor = connection.cursor()
+    cursor.execute("select Content from lesson_detail where Content like" + "'%" + str(query) + "%'")
+    result = cursor.fetchall()
+    result = str(result).replace("(", "").replace("'", "").replace(")", "").replace(".", "").replace(",", "")
+    return render(request, 'music_search/kbs.html', context={'test':result})
