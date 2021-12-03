@@ -71,4 +71,5 @@ def kbs(request):
     cursor.execute("select Content from lesson_detail where Content like" + "'%" + str(query) + "%'")
     result = cursor.fetchall()
     result = ''.join(str(result))
-    return render(request, 'music_search/kbs.html', context={'test':result})
+    print(result[3:-5:].replace(r"\\", "\\"))
+    return render(request, 'music_search/kbs.html', context={'test':result[3:-5:].replace(r"\\", "\\")})
