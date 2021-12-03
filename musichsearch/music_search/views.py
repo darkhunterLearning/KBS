@@ -68,8 +68,16 @@ def kbs(request):
     query_dict = request.GET
     query = query_dict.get("q")
     cursor = connection.cursor()
-    cursor.execute("select Content from lesson_detail where Content like" + "'%" + str(query) + "%'")
+    cursor.execute(f"SELECT lesson_detail.Content FROM lesson_detail WHERE lesson_detail.Name LIKE '%{str(query)}%' OR lesson_detail.Content LIKE '%{str(query)}%'")
     result = cursor.fetchall()
-    result = ''.join(str(result))
-    print(result[3:-5:].replace(r"\\", "\\"))
-    return render(request, 'music_search/kbs.html', context={'test':result[3:-5:].replace(r"\\", "\\")})
+    final = ''
+    print(len(result))
+    for res in result:
+        res = ''.join(str(res))
+        res = res[2:-4:].replace(r"\\", "\\")
+        final = final + '\n' + res 
+    # result = ''.join(str(result))
+    # print(len(result))
+    # print(result[3:-5:].replace(r"\\", "\\"))
+    print(final)
+    return render(request, 'music_search/kbs.html', context={'test':final})
