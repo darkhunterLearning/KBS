@@ -7,6 +7,7 @@ import pickle
 from django.core.files.storage import default_storage
 from django.db import connection
 from .models import displaydata
+from django.template.defaultfilters import linebreaks
 
 def home(request):
     return render(request, 'music_search/home.html')
@@ -68,13 +69,13 @@ def kbs(request):
     query_dict = request.GET
     query = query_dict.get("q")
     cursor = connection.cursor()
-    cursor.execute(f"SELECT lesson_detail.Content FROM lesson_detail WHERE lesson_detail.Name LIKE '%{str(query)}%' OR lesson_detail.Content LIKE '%{str(query)}%'")
+    cursor.execute(f"SELECT lesson_detail.Content FROM lesson_detail WHERE lesson_detail.Name LIKE '%{str(query)}%'")# OR lesson_detail.Content LIKE '%{str(query)}%'")
     result = cursor.fetchall()
     final = ''
     print(len(result))
     for res in result:
         res = ''.join(str(res))
-        res = res[2:-4:].replace(r"\\", "\\")
+        res = res[2:-4:].replace(r"\\", "\\").replace(r"\\n", "\n").replace(r'\r\n', '\n')
         final = final + '\n' + res 
     # result = ''.join(str(result))
     # print(len(result))
