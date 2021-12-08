@@ -76,7 +76,6 @@ def kbs(request):
     show_lesson = showlesson.objects.all()
     # final = result
     final = ''
-<<<<<<< HEAD
     print(result)
     result = list(result[0])
     chap_name = result[0]
@@ -89,14 +88,12 @@ def kbs(request):
     #     res = ''.join(str(res))
     #     res = res[2:-4:].replace(r"\\", "\\").replace(r"\\n", "\n").replace(r'\r\n', '\n')
     #     final = final + '\n' + res
-=======
     print(len(result))
     # Do kết quả query sẽ bao gồm 1 tuple với độ dài nào đó chứa output nên chúng ta phải dùng 1 vòng lặp để rút trích từng output
     for res in result:
         res = ''.join(str(res))
         res = res[2:-4:].replace(r"\\", "\\").replace(r"\\n", "\n").replace(r'\r\n', '\n') #phần tử trong cục query ban đầu là 1 tuple
         final = final + '\n' + res #render trên html thì chỉ nhận 1 biến do đó ta phải cộng các cục res đã xử lý khoảng trắng ở trên để trả về output cuối cùng
->>>>>>> b2650bbff2b1b1b62cadb3fd86a1c54b5995b7e9
     # result = ''.join(str(result))
     # print(len(result))
     # print(result[3:-5:].replace(r"\\", "\\"))
