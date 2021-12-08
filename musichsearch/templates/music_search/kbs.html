@@ -22,10 +22,26 @@
                 </form>
             </div>
         </div>
+        <br>
+        <select>
+            <option disabled="true" selected>-- Select Chapter --</option>
+            {% for i in showchap %}
+            <option>{{i.name}}</option>
+            {% endfor %}
+        </select>
+        <select>
+            <option disabled="true" selected>-- Select Lesson --</option>
+            {% for i in showlesson %}
+            <option>{{i.name}}</option>
+            {% endfor %}
+        </select>
     </div>
 </div>
 <br>
 {% if test %}
+<h2>{{chapter}}</h2>
+<h3>{{lesson}}</h3>
+<h4>{{lesson_d}}</h4>
 {{ test|linebreaks }}
 {% endif %}
 <div class="containter">

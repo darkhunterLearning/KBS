@@ -9,3 +9,13 @@ class Audio_store(models.Model):
 class displaydata(models.Model):
     Cname = models.CharField(max_length=100)
     Sname = models.CharField(max_length=100)
+
+class showchap(models.Model):
+    name = models.CharField(max_length=100)
+    class Meta:
+        db_table = "chapter"
+
+class showlesson(models.Model):
+    name = models.CharField(max_length=100)
+    class Meta:
+        db_table = "lesson"
