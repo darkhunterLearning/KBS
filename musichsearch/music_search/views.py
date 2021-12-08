@@ -73,10 +73,11 @@ def kbs(request):
     result = cursor.fetchall()
     final = ''
     print(len(result))
+    # Do kết quả query sẽ bao gồm 1 tuple với độ dài nào đó chứa output nên chúng ta phải dùng 1 vòng lặp để rút trích từng output
     for res in result:
         res = ''.join(str(res))
-        res = res[2:-4:].replace(r"\\", "\\").replace(r"\\n", "\n").replace(r'\r\n', '\n')
-        final = final + '\n' + res 
+        res = res[2:-4:].replace(r"\\", "\\").replace(r"\\n", "\n").replace(r'\r\n', '\n') #phần tử trong cục query ban đầu là 1 tuple
+        final = final + '\n' + res #render trên html thì chỉ nhận 1 biến do đó ta phải cộng các cục res đã xử lý khoảng trắng ở trên để trả về output cuối cùng
     # result = ''.join(str(result))
     # print(len(result))
     # print(result[3:-5:].replace(r"\\", "\\"))
