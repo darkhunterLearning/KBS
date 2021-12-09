@@ -69,40 +69,42 @@ def kbs(request):
     query_dict = request.GET
     query = query_dict.get("q")
     cursor = connection.cursor()
-    cursor.execute(f"SELECT lesson_detail.Content FROM lesson_detail WHERE lesson_detail.Name LIKE '%{str(query)}%'")# OR lesson_detail.Content LIKE '%{str(query)}%'")
+    # cursor.execute(f"SELECT lesson_detail.Content FROM lesson_detail WHERE lesson_detail.Name LIKE '%{str(query)}%'")# OR lesson_detail.Content LIKE '%{str(query)}%'")
     cursor.execute(f"select c.Name, l.Name, ld.Name, ld.Content from chapter c, lesson l, lesson_detail ld where c.ID = l.ID_chapter and l.ID = ld.ID_lesson and ld.Content LIKE '%{str(query)}%'") #OR lesson_detail.Content LIKE '%{str(query)}%")
     result = cursor.fetchall()
     show_chap = showchap.objects.all()
     show_lesson = showlesson.objects.all()
     # final = result
-    final = ''
-    print(result)
-    result = list(result[0])
-    chap_name = result[0]
-    lesson_name = result[1]
-    lesson_d_name = result[2]
-    lesson_d_content = result[3]
+    if len(result) != 0:
+        result = list(result[0])
+        chap_name = result[0]
+        lesson_name = result[1]
+        lesson_d_name = result[2]
+        lesson_d_content = result[3]
     # print(result)
     # print(result[0])
     # for res in lesson_d_content :
     #     res = ''.join(str(res))
     #     res = res[2:-4:].replace(r"\\", "\\").replace(r"\\n", "\n").replace(r'\r\n', '\n')
     #     final = final + '\n' + res
-    print(len(result))
     # Do kết quả query sẽ bao gồm 1 tuple với độ dài nào đó chứa output nên chúng ta phải dùng 1 vòng lặp để rút trích từng output
-    for res in result:
-        res = ''.join(str(res))
-        res = res[2:-4:].replace(r"\\", "\\").replace(r"\\n", "\n").replace(r'\r\n', '\n') #phần tử trong cục query ban đầu là 1 tuple
-        final = final + '\n' + res #render trên html thì chỉ nhận 1 biến do đó ta phải cộng các cục res đã xử lý khoảng trắng ở trên để trả về output cuối cùng
+    # for res in lesson_d_content:
+    #     res = ''.join(str(res))
+    #     res = res[2:-4:].replace(r"\\", "\\").replace(r"\\n", "\n").replace(r'\r\n', '\n') #phần tử trong cục query ban đầu là 1 tuple
+    #     final = final + '\n' + res #render trên html thì chỉ nhận 1 biến do đó ta phải cộng các cục res đã xử lý khoảng trắng ở trên để trả về output cuối cùng
     # result = ''.join(str(result))
     # print(len(result))
     # print(result[3:-5:].replace(r"\\", "\\"))
-    print(lesson_d_content)
-    return render(request, 'music_search/kbs.html', context={'test':lesson_d_content,
-                                                            'showchap':show_chap,
-                                                            'showlesson':show_lesson,
-                                                            'chapter':chap_name,
-                                                            'lesson': lesson_name,
-                                                            'lesson_d': lesson_d_name})
+    # print(lesson_d_content)
+        return render(request, 'music_search/kbs.html', context={'test':lesson_d_content,
+                                                                'showchap':show_chap,
+                                                                'showlesson':show_lesson,
+                                                                'chapter':chap_name,
+                                                                'lesson': lesson_name,
+                                                                'lesson_d': lesson_d_name})
+    else:
+        return render(request, 'music_search/kbs.html', context={'test':result,
+                                                                'showchap':show_chap,
+                                                                'showlesson':show_lesson})
 
 

@@ -27,6 +27,8 @@ SET time_zone = "+00:00";
 -- Table structure for table `audio_store`
 --
 
+/* USE kbs; */
+
 CREATE TABLE `audio_store` (
   `id` bigint(20) NOT NULL,
   `record` varchar(100) NOT NULL
