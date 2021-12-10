@@ -5,6 +5,18 @@
 <script type="text/javascript" id="MathJax-script" async
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
 </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+            var $chapvar = $("#chapter");
+            var $lessonvar = $("#lesson");
+
+            $options = $lessonvar.find('option');
+            $chapvar.on('change', function(){
+                $lessonvar.html($options.filter('[value="'+this.value+'"]'));
+            }).trigger('change');
+    });
+</script>
 <h2 class="text-center mt-3 mb-3 border border-primary"><b>PS Searcher</b></h2>
 <div class="container my-4 post-wrapper">
     <div class="jumbotron border shadow">
@@ -23,16 +35,16 @@
             </div>
         </div>
         <br>
-        <select>
+        <select id="chapter">
             <option disabled="true" selected>-- Select Chapter --</option>
             {% for i in showchap %}
-            <option>{{i.name}}</option>
+            <option value="{{i.ID}}">{{i.name}}</option>
             {% endfor %}
         </select>
-        <select>
+        <select id="lesson">
             <option disabled="true" selected>-- Select Lesson --</option>
             {% for i in showlesson %}
-            <option>{{i.name}}</option>
+            <option value="{{i.ID_chapter}}">{{i.name}}</option>
             {% endfor %}
         </select>
     </div>

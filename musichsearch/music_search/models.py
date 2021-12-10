@@ -12,10 +12,13 @@ class displaydata(models.Model):
 
 class showchap(models.Model):
     name = models.CharField(max_length=100)
+    ID = models.CharField(max_length=100, primary_key=True)
     class Meta:
         db_table = "chapter"
 
 class showlesson(models.Model):
     name = models.CharField(max_length=100)
+    ID_chapter = models.CharField(max_length=100)
+    ID = models.IntegerField(primary_key=True)
     class Meta:
         db_table = "lesson"
