@@ -40,13 +40,13 @@
             <select id="chapter" name="chap">
                 <option disabled selected="true">-- Select Chapter --</option>
                 {% for i in showchap %}
-                <option value="{{i.ID}}">{{i.name}}</option>
+                <option value="{{i.ID}}">{{i.ID}}:{{i.name}}</option>
                 {% endfor %}
             </select>
             <select id="lesson" name="les">
                 <option disabled selected="true">-- Select Lesson --</option>
                 {% for i in showlesson %}
-                <option value="{{i.ID_chapter}}">{{i.ID}}: {{i.name}}</option>
+                <option value="{{i.ID_chapter}}">{{i.ID_chapter}}:{{i.ID}}: {{i.name}}</option>
                 {% endfor %}
             </select>
             <select id="lesson_detail" name="les_detail">
