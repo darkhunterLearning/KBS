@@ -158,7 +158,7 @@ def cleaning_punctuations(text):
 
 def cleaning_stopwords(text):
     stopwords = []
-    with open("vietnamese-stopwords.txt") as file:
+    with open("vietnamese-stopwords.txt", encoding="utf8") as file:
         for line in file:
             line = line.strip()
             stopwords.append(line)
