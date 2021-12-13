@@ -24,7 +24,7 @@
             <div class="col-md-8 offset-2">
                 <form>
                     <div class="input-group">
-                        <form action='' method="GET">
+                        <form action='' method="GET" name="form1">
                         <!-- {% csrf_token %} -->
                         <!-- {{form.as_p}} -->
                         <input type="text" name="q" class="form-control form-control-lg" />
@@ -60,12 +60,41 @@
     </div>
 </div>
 <br>
-{% if test %}
-<h2>{{chapter}}</h2>
-<h3>{{lesson}}</h3>
-<h4>{{lesson_d}}</h4>
-{{ test|linebreaks }}
+
+<!--
+flag == 0 nghĩa là sử dụng nút Search
+-->
+
+{% if flag == 0 %}
+    <h2>{{chapter}}</h2>
+    <h3>{{lesson}}</h3>
+    <h4>{{lesson_d}}</h4>
+    {{ test|linebreaks }}
 {% endif %}
+
+<!--
+flag != 0, nghĩa là sử dụng nút Filter    
+-->
+{% if flag == 1 %}
+    {% for i in test %}
+    <h4>{{forloop.counter}}. {{i}}</h4>
+    {% endfor %}
+{% endif %}
+
+{% if flag == 2 %}
+    {% for i in test %}
+    <h4>{{forloop.counter}}. {{i}}</h4>
+    {% endfor %}
+{% endif %}
+
+{% if flag == 3 %}
+    <h2>{{chapter}}</h2>
+    <h3>{{lesson}}</h3>
+    <h4>{{lesson_d}}</h4>
+    {{ test|linebreaks }}
+{% endif %}
+
+
 <div class="containter">
     <div class="row">
         <div class="col text-center">
