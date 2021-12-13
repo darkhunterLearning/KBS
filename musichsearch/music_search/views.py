@@ -55,32 +55,49 @@ def demo(request):
 #     return render(request, 'music_search/result.html', context={'data':result})
 
 def kbs(request):
-    # form = HomeForm()
-    # if request.method == "POST":
-    #     form = HomeForm(request.POST)
-    #     if form.is_valid():
-    #         data = request.POST.get("demo")
-    #         # form.save()
-    #         print(data)
-    #         return render(request, 'music_search/result.html', context={'data': data})
-    # else:
-    #     form = HomeForm()
-    # print(request)
     query_dict = request.GET
-    query = query_dict.get("q")
+    test_dict = request.POST.get("chap")
+    demo_dict = request.POST.get("les")
+    name_dict = request.POST.get("les_detail")
+    query = preprocess_input(query_dict.get("q"))
     cursor = connection.cursor()
-    # cursor.execute(f"SELECT lesson_detail.Content FROM lesson_detail WHERE lesson_detail.Name LIKE '%{str(query)}%'")# OR lesson_detail.Content LIKE '%{str(query)}%'")
-    cursor.execute(f"select c.Name, l.Name, ld.Name, ld.Content from chapter c, lesson l, lesson_detail ld where c.ID = l.ID_chapter and l.ID = ld.ID_lesson and ld.Content LIKE '%{str(query)}%'") #OR lesson_detail.Content LIKE '%{str(query)}%")
+    print(test_dict) #debug
+    print(demo_dict) #debug
+    print(name_dict) #debug
+    print(query)
+    if test_dict != None:
+        query_code = f"select c.Name, l.Name, ld.Name, ld.Content from chapter c, lesson l, lesson_detail ld where c.ID = l.ID_chapter and l.ID = ld.ID_lesson and l.ID_chapter = '{str(demo_dict)}' and c.ID =  '{str(test_dict)}' and ld.Name = '{str(name_dict)}'"
+    else:
+        query_code = f"select c.Name, l.Name, ld.Name, ld.Content from chapter c, lesson l, lesson_detail ld where c.ID = l.ID_chapter and l.ID = ld.ID_lesson and ld.Content LIKE '%{str(query)}%'"
+    # query_code = f"select c.Name, l.Name, ld.Name, ld.Content from chapter c, lesson l, lesson_detail ld where c.ID = l.ID_chapter and l.ID = ld.ID_lesson and l.ID_chapter = '{str(demo_dict)}' and c.ID =  '{str(test_dict)}' and ld.Name = '{str(name_dict)}'"
+    # query_code = f"select c.Name, l.Name, ld.Name, ld.Content from chapter c, lesson l, lesson_detail ld where c.ID = l.ID_chapter and l.ID = ld.ID_lesson and ld.Content LIKE '%{str(query)}%'"
+    # print(query_code) #debug
+    cursor.execute(query_code)
     result = cursor.fetchall()
     show_chap = showchap.objects.all()
     show_lesson = showlesson.objects.all()
+    show_lesson_detail = showlessondetail.objects.all()
     # final = result
     if len(result) != 0:
+        # return render(request, 'music_search/kbs.html', context={'test':result})
         result = list(result[0])
         chap_name = result[0]
         lesson_name = result[1]
         lesson_d_name = result[2]
         lesson_d_content = result[3]
+        return render(request, 'music_search/kbs.html', context={'test':lesson_d_content,
+                                                                'showchap':show_chap,
+                                                                'showlesson':show_lesson,
+                                                                'showlessondetail': show_lesson_detail,
+                                                                'chapter':chap_name,
+                                                                'lesson': lesson_name,
+                                                                'lesson_d': lesson_d_name})
+    else:
+        return render(request, 'music_search/kbs.html', context={'test':result,
+                                                                'showchap':show_chap,
+                                                                'showlesson':show_lesson,
+                                                                'showlessondetail':show_lesson_detail})
+
     # print(result)
     # print(result[0])
     # for res in lesson_d_content :
@@ -96,15 +113,5 @@ def kbs(request):
     # print(len(result))
     # print(result[3:-5:].replace(r"\\", "\\"))
     # print(lesson_d_content)
-        return render(request, 'music_search/kbs.html', context={'test':lesson_d_content,
-                                                                'showchap':show_chap,
-                                                                'showlesson':show_lesson,
-                                                                'chapter':chap_name,
-                                                                'lesson': lesson_name,
-                                                                'lesson_d': lesson_d_name})
-    else:
-        return render(request, 'music_search/kbs.html', context={'test':result,
-                                                                'showchap':show_chap,
-                                                                'showlesson':show_lesson})
 
 

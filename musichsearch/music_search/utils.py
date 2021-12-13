@@ -5,11 +5,13 @@ import pickle
 import os
 import librosa
 import numpy as np
+import re
+import string
 
 # import audio2numpy as a2n
 def convert(audio_file):
     m4a_sound = AudioSegment.from_file(audio_file)
-    result = m4a_sound.export("media/{0}.wav".format(audio_file.replace("D:/Google Drive/Data Mining/songs/", "").replace(".m4a", "")), 
+    result = m4a_sound.export("media/{0}.wav".format(audio_file.replace("D:/Google Drive/Data Mining/songs/", "").replace(".m4a", "")),
                               format="wav")
     return result
 
@@ -145,3 +147,25 @@ class MusicSearch:
         for k in counts:
             counts[k] = float(counts[k])/self.num_features_in_file[k]
         return counts
+
+def cleaning_email(text):
+    return re.sub('@[^\\s]+', ' ', str(text))
+
+def cleaning_punctuations(text):
+    punctuations = string.punctuation
+    translator = str.maketrans('', '', punctuations)
+    return text.translate(translator)
+
+def cleaning_stopwords(text):
+    stopwords = []
+    with open("vietnamese-stopwords.txt") as file:
+        for line in file:
+            line = line.strip()
+            stopwords.append(line)
+    return " ".join([word for word in str(text).split() if word not in stopwords])
+
+def preprocess_input(text):
+    text = cleaning_email(text)
+    text = cleaning_punctuations(text)
+    text = cleaning_stopwords(text)
+    return text

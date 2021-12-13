@@ -6,17 +6,17 @@
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
+{% comment %} <script>
     $(document).ready(function(){
-            var $chapvar = $("#chapter");
-            var $lessonvar = $("#lesson");
+            $chapvar = $("#chapter");
+            $lessonvar = $("#lesson");
 
             $options = $lessonvar.find('option');
             $chapvar.on('change', function(){
                 $lessonvar.html($options.filter('[value="'+this.value+'"]'));
             }).trigger('change');
     });
-</script>
+</script> {% endcomment %}
 <h2 class="text-center mt-3 mb-3 border border-primary"><b>PS Searcher</b></h2>
 <div class="container my-4 post-wrapper">
     <div class="jumbotron border shadow">
@@ -24,7 +24,7 @@
             <div class="col-md-8 offset-2">
                 <form>
                     <div class="input-group">
-                        <form  action='' method="GET">
+                        <form action='' method="GET">
                         <!-- {% csrf_token %} -->
                         <!-- {{form.as_p}} -->
                         <input type="text" name="q" class="form-control form-control-lg" />
@@ -35,18 +35,28 @@
             </div>
         </div>
         <br>
-        <select id="chapter">
-            <option disabled="true" selected>-- Select Chapter --</option>
-            {% for i in showchap %}
-            <option value="{{i.ID}}">{{i.name}}</option>
-            {% endfor %}
-        </select>
-        <select id="lesson">
-            <option disabled="true" selected>-- Select Lesson --</option>
-            {% for i in showlesson %}
-            <option value="{{i.ID_chapter}}">{{i.name}}</option>
-            {% endfor %}
-        </select>
+        <form method="POST">
+            {% csrf_token %}
+            <select id="chapter" name="chap">
+                <option disabled selected="true">-- Select Chapter --</option>
+                {% for i in showchap %}
+                <option value="{{i.ID}}">{{i.name}}</option>
+                {% endfor %}
+            </select>
+            <select id="lesson" name="les">
+                <option disabled selected="true">-- Select Lesson --</option>
+                {% for i in showlesson %}
+                <option value="{{i.ID_chapter}}">{{i.ID}}: {{i.name}}</option>
+                {% endfor %}
+            </select>
+            <select id="lesson_detail" name="les_detail">
+                <option disabled selected="true">-- Select Lesson Name --</option>
+                {% for i in showlessondetail %}
+                <option value="{{i.name}}">{{i.ID_lesson}}: {{i.name}}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="Filter"/>
+        </form>
     </div>
 </div>
 <br>

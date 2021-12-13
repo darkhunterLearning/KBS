@@ -22,3 +22,10 @@ class showlesson(models.Model):
     ID = models.IntegerField(primary_key=True)
     class Meta:
         db_table = "lesson"
+
+class showlessondetail(models.Model):
+    name = models.CharField(max_length=100)
+    ID_lesson = models.CharField(max_length=100)
+    ID = models.IntegerField(primary_key=True)
+    class Meta:
+        db_table = "lesson_detail"
