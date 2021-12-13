@@ -61,42 +61,115 @@ def kbs(request):
     name_dict = request.POST.get("les_detail")
     query = preprocess_input(query_dict.get("q"))
     cursor = connection.cursor()
+
+    print(query_dict.get(""))
     print(test_dict) #debug
     print(demo_dict) #debug
     print(name_dict) #debug
     print(query)
+
+    flag = -1
     if test_dict != None:
-        query_code = f"select c.Name, l.Name, ld.Name, ld.Content from chapter c, lesson l, lesson_detail ld where c.ID = l.ID_chapter and l.ID = ld.ID_lesson and l.ID_chapter = '{str(demo_dict)}' and c.ID =  '{str(test_dict)}' and ld.Name = '{str(name_dict)}'"
+        query_code = f"select l.Name\
+                       from chapter c, lesson l\
+                       where c.ID = l.ID_chapter and\
+                             c.ID =  '{str(test_dict)}'"
+        flag=1
+        if demo_dict != None:
+            flag=2
+            pass
+            if name_dict != None:
+                flag=3
+                query_code = f"select c.Name, l.Name, ld.Name, ld.Content\
+                       from chapter c, lesson l, lesson_detail ld\
+                       where c.ID = l.ID_chapter and\
+                             l.ID = ld.ID_lesson and\
+                             l.ID_chapter = '{str(demo_dict)}' and\
+                             c.ID =  '{str(test_dict)}' and\
+                             ld.Name = '{str(name_dict)}'"
+    
     else:
-        query_code = f"select c.Name, l.Name, ld.Name, ld.Content from chapter c, lesson l, lesson_detail ld where c.ID = l.ID_chapter and l.ID = ld.ID_lesson and ld.Content LIKE '%{str(query)}%'"
+        flag=0
+        query_code = f"select c.Name, l.Name, ld.Name, ld.Content\
+                       from chapter c, lesson l, lesson_detail ld\
+                       where c.ID = l.ID_chapter and\
+                       l.ID = ld.ID_lesson and\
+                       ld.Content LIKE '%{str(query)}%'"
+    
     # query_code = f"select c.Name, l.Name, ld.Name, ld.Content from chapter c, lesson l, lesson_detail ld where c.ID = l.ID_chapter and l.ID = ld.ID_lesson and l.ID_chapter = '{str(demo_dict)}' and c.ID =  '{str(test_dict)}' and ld.Name = '{str(name_dict)}'"
     # query_code = f"select c.Name, l.Name, ld.Name, ld.Content from chapter c, lesson l, lesson_detail ld where c.ID = l.ID_chapter and l.ID = ld.ID_lesson and ld.Content LIKE '%{str(query)}%'"
     # print(query_code) #debug
+    
     cursor.execute(query_code)
     result = cursor.fetchall()
     show_chap = showchap.objects.all()
     show_lesson = showlesson.objects.all()
     show_lesson_detail = showlessondetail.objects.all()
+    
     # final = result
+    
+    # Query có kết quả
     if len(result) != 0:
         # return render(request, 'music_search/kbs.html', context={'test':result})
-        result = list(result[0])
-        chap_name = result[0]
-        lesson_name = result[1]
-        lesson_d_name = result[2]
-        lesson_d_content = result[3]
-        return render(request, 'music_search/kbs.html', context={'test':lesson_d_content,
+
+        chap_name = ""
+        lesson_name = ""
+        lesson_d_name = ""
+        lesson_d_content = ""
+
+        print(f"exit flag:{flag}") #debug
+        
+        # Trả về kết quả của nút search
+        if flag==0:
+            result = list(result[0])
+            chap_name = result[0]
+            lesson_name = result[1]
+            lesson_d_name = result[2]
+            lesson_d_content = result[3]
+            return render(request, 'music_search/kbs.html', context={'flag': flag,
+                                                                'test':lesson_d_content,
                                                                 'showchap':show_chap,
                                                                 'showlesson':show_lesson,
                                                                 'showlessondetail': show_lesson_detail,
                                                                 'chapter':chap_name,
                                                                 'lesson': lesson_name,
                                                                 'lesson_d': lesson_d_name})
-    else:
-        return render(request, 'music_search/kbs.html', context={'test':result,
+        # Trả về kết quả của nút Filter
+        # Chỉ chọn chapter
+        if flag==1:
+            result = list(x[0] for x in result)
+            return render(request, 'music_search/kbs.html', context={'flag': flag,
+                                                                     'test':result,
+                                                                     'showchap':show_chap,
+                                                                     'showlesson':show_lesson,
+                                                                     'showlessondetail':show_lesson_detail})
+        # Chỉ chọn Chapter + Lesson
+        if flag==2:
+            pass
+        
+        # Chỉ chọn Chapter + Lesson + Lesson Detail
+        if flag==3:
+            result = list(result[0])
+            chap_name = result[0]
+            lesson_name = result[1]
+            lesson_d_name = result[2]
+            lesson_d_content = result[3]
+
+            return render(request, 'music_search/kbs.html', context={'flag': flag,
+                                                                'test':lesson_d_content,
                                                                 'showchap':show_chap,
                                                                 'showlesson':show_lesson,
-                                                                'showlessondetail':show_lesson_detail})
+                                                                'showlessondetail': show_lesson_detail,
+                                                                'chapter':chap_name,
+                                                                'lesson': lesson_name,
+                                                                'lesson_d': lesson_d_name})
+    # Trả về trống nếu query không có kết quả
+    return render(request, 'music_search/kbs.html', context={'flag': flag,
+                                                            'test':result,
+                                                            'showchap':show_chap,
+                                                            'showlesson':show_lesson,
+                                                            'showlessondetail':show_lesson_detail})
+
 
     # print(result)
     # print(result[0])
