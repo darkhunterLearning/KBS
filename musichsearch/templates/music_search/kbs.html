@@ -6,27 +6,27 @@
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-    $(document).ready(function(){
-            $chapvar = $("#chapter");
-            $lessonvar = $("#lesson");
-            $lessondetailvar = $("#lesson_detail")
+<!-- <script> -->
+<!--     $(document).ready(function(){ -->
+<!--             $chapvar = $("#chapter"); -->
+<!--             $lessonvar = $("#lesson"); -->
+<!--             $lessondetailvar = $("#lesson_detail") -->
 
-            $options = $lessonvar.find('option');
-            $chapvar.on('change', function(){
-                $lessonvar.html($options.filter('[value="'+this.value+'"]'));
-            }).trigger('change');
-<!--             $lessonvar.on('change', function(){ -->
-<!--                 var _rel = $(this).val(); -->
-<!--                 $lessonvar.val(''); -->
-<!--                 $lessondetailvar.val(''); -->
-<!--                 $lessonvar.find("option").css("display", "none"); -->
-<!--                 $lessonvar.find("[rel="+_rel+"]").show(); -->
-<!--                 $lessondetailvar.find("option").css("display", "none"); -->
-<!--                 $lessondetailvar.find("[rel="+_rel+"]").show(); -->
-<!--             }); -->
-    });
-</script>
+<!--             $options = $lessonvar.find('option'); -->
+<!--             $chapvar.on('change', function(){ -->
+<!--                 $lessonvar.html($options.filter('[value="'+this.value+'"]')); -->
+<!--             }).trigger('change'); -->
+<!-- <!-1-             $lessonvar.on('change', function(){ -1-> -->
+<!-- <!-1-                 var _rel = $(this).val(); -1-> -->
+<!-- <!-1-                 $lessonvar.val(''); -1-> -->
+<!-- <!-1-                 $lessondetailvar.val(''); -1-> -->
+<!-- <!-1-                 $lessonvar.find("option").css("display", "none"); -1-> -->
+<!-- <!-1-                 $lessonvar.find("[rel="+_rel+"]").show(); -1-> -->
+<!-- <!-1-                 $lessondetailvar.find("option").css("display", "none"); -1-> -->
+<!-- <!-1-                 $lessondetailvar.find("[rel="+_rel+"]").show(); -1-> -->
+<!-- <!-1-             }); -1-> -->
+<!--     }); -->
+<!-- </script> -->
 <h2 class="text-center mt-3 mb-3 border border-primary"><b>PS Searcher</b></h2>
 <div class="container my-4 post-wrapper">
     <div class="jumbotron border shadow">

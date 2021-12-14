@@ -81,7 +81,7 @@ def kbs(request):
                        from chapter c, lesson l, lesson_detail ld\
                        where c.ID = l.ID_chapter and ld.ID_lesson = l.ID and\
                              c.ID =  '{str(test_dict)}' and\
-                             l.ID_chapter = '{demo_dict}'"
+                             l.ID_chapter = '{str(demo_dict)}'"
 
             if name_dict != None:
                 flag=3
@@ -150,6 +150,7 @@ def kbs(request):
                                                                      'showlessondetail':show_lesson_detail})
         # Chỉ chọn Chapter + Lesson
         if flag==2:
+            print(result)
             result = [' '.join([str(elem) for elem in list(x)]) for x in result]
             return render(request, 'music_search/kbs.html', context={'flag': flag,
                                                                      'test':result,
@@ -194,5 +195,3 @@ def kbs(request):
     # print(len(result))
     # print(result[3:-5:].replace(r"\\", "\\"))
     # print(lesson_d_content)
-
-
