@@ -74,10 +74,15 @@ def kbs(request):
                        from chapter c, lesson l\
                        where c.ID = l.ID_chapter and\
                              c.ID =  '{str(test_dict)}'"
-        flag=1
+        flag = 1
         if demo_dict != None:
-            flag=2
-            pass
+            flag = 2
+            query_code = f"select ld.Name\
+                       from chapter c, lesson l, lesson_detail ld\
+                       where c.ID = l.ID_chapter and ld.ID_lesson = l.ID and\
+                             c.ID =  '{str(test_dict)}' and\
+                             l.ID_chapter = '{demo_dict}'"
+
             if name_dict != None:
                 flag=3
                 query_code = f"select c.Name, l.Name, ld.Name, ld.Content\
@@ -145,8 +150,12 @@ def kbs(request):
                                                                      'showlessondetail':show_lesson_detail})
         # Chỉ chọn Chapter + Lesson
         if flag==2:
-            pass
-
+            result = [' '.join([str(elem) for elem in list(x)]) for x in result]
+            return render(request, 'music_search/kbs.html', context={'flag': flag,
+                                                                     'test':result,
+                                                                     'showchap':show_chap,
+                                                                     'showlesson':show_lesson,
+                                                                     'showlessondetail':show_lesson_detail})
         # Chỉ chọn Chapter + Lesson + Lesson Detail
         if flag==3:
             result = list(result[0])
