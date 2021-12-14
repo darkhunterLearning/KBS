@@ -710,7 +710,6 @@ lúc đó
 lúc đến
 lúc ấy
 lý do
-lượng
 lượng cả
 lượng số
 lượng từ
@@ -1773,7 +1772,6 @@ yêu cầu
 điều
 điều gì
 điều kiện
-điểm
 điểm chính
 điểm gặp
 điểm đầu tiên
