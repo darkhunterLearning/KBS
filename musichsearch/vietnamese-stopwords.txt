@@ -272,7 +272,6 @@ chịu chưa
 chịu lời
 chịu tốt
 chịu ăn
-chọn
 chọn bên
 chọn ra
 chốc chốc
@@ -313,7 +312,6 @@ càng
 càng càng
 càng hay
 cá nhân
-các
 các cậu
 cách
 cách bức
@@ -581,7 +579,6 @@ khi nào
 khi nên
 khi trước
 khiến
-khoảng
 khoảng cách
 khoảng không
 khá
@@ -1240,7 +1237,6 @@ sắp đặt
 sẽ
 sẽ biết
 sẽ hay
-số
 số cho biết
 số cụ thể
 số loại
@@ -1399,7 +1395,6 @@ thực ra
 thực sự
 thực tế
 thực vậy
-tin
 tin thêm
 tin vào
 tiếp theo
@@ -1871,7 +1866,6 @@ yêu cầu
 đến xem
 đến điều
 đến đâu
-đều
 đều bước
 đều nhau
 đều đều

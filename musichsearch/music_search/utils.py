@@ -166,6 +166,6 @@ def cleaning_stopwords(text):
 
 def preprocess_input(text):
     text = cleaning_email(text)
-    text = cleaning_punctuations(text)
+    # text = cleaning_punctuations(text)
     text = cleaning_stopwords(text)
     return text
