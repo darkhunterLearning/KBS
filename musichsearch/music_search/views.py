@@ -87,7 +87,7 @@ def kbs(request):
                              l.ID_chapter = '{str(demo_dict)}' and\
                              c.ID =  '{str(test_dict)}' and\
                              ld.Name = '{str(name_dict)}'"
-    
+
     else:
         flag=0
         query_code = f"select c.Name, l.Name, ld.Name, ld.Content\
@@ -95,19 +95,19 @@ def kbs(request):
                        where c.ID = l.ID_chapter and\
                        l.ID = ld.ID_lesson and\
                        ld.Content LIKE '%{str(query)}%'"
-    
+
     # query_code = f"select c.Name, l.Name, ld.Name, ld.Content from chapter c, lesson l, lesson_detail ld where c.ID = l.ID_chapter and l.ID = ld.ID_lesson and l.ID_chapter = '{str(demo_dict)}' and c.ID =  '{str(test_dict)}' and ld.Name = '{str(name_dict)}'"
     # query_code = f"select c.Name, l.Name, ld.Name, ld.Content from chapter c, lesson l, lesson_detail ld where c.ID = l.ID_chapter and l.ID = ld.ID_lesson and ld.Content LIKE '%{str(query)}%'"
     # print(query_code) #debug
-    
+
     cursor.execute(query_code)
     result = cursor.fetchall()
     show_chap = showchap.objects.all()
     show_lesson = showlesson.objects.all()
     show_lesson_detail = showlessondetail.objects.all()
-    
+
     # final = result
-    
+
     # Query có kết quả
     if len(result) != 0:
         # return render(request, 'music_search/kbs.html', context={'test':result})
@@ -118,7 +118,7 @@ def kbs(request):
         lesson_d_content = ""
 
         print(f"exit flag:{flag}") #debug
-        
+
         # Trả về kết quả của nút search
         if flag==0:
             result = list(result[0])
@@ -146,7 +146,7 @@ def kbs(request):
         # Chỉ chọn Chapter + Lesson
         if flag==2:
             pass
-        
+
         # Chỉ chọn Chapter + Lesson + Lesson Detail
         if flag==3:
             result = list(result[0])
@@ -165,7 +165,6 @@ def kbs(request):
                                                                 'lesson_d': lesson_d_name})
     # Trả về trống nếu query không có kết quả
     return render(request, 'music_search/kbs.html', context={'flag': flag,
-                                                            'test':result,
                                                             'showchap':show_chap,
                                                             'showlesson':show_lesson,
                                                             'showlessondetail':show_lesson_detail})
